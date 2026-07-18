@@ -18,13 +18,13 @@ jobs:
           cache: gradle
 
       - name: Regenerate Gradle Wrapper
-        run: gradle wrapper --gradle-version 9.3.1 || echo "Gradle wrapper regeneration skipped or failed"
+        run: gradle wrapper --gradle-version 9.3.1
 
       - name: Grant execute permission
         run: chmod +x gradlew
 
       - name: Generate debug keystore
-        run: keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -dname "CN=Android Debug,O=Android,C=US" -keyalg RSA -keysize 2048 -validity 10000 || echo "Keystore generation skipped or failed"
+        run: keytool -genkey -v -keystore debug.keystore -storepass android -alias androiddebugkey -keypass android -dname "CN=Android Debug,O=Android,C=US" -keyalg RSA -keysize 2048 -validity 10000
 
       - name: Build Debug APK
         run: ./gradlew assembleDebug
@@ -32,5 +32,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug-apk
+          name: apk-debug
           path: "**/*.apk"
